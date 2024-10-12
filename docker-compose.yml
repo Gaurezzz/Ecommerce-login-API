@@ -1,0 +1,42 @@
+version: '3.8'  # Asegúrate de tener una versión de Docker Compose adecuada
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: xM78%3hU/N^A
+      MYSQL_DATABASE: loginDB
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: xM78%3hU/N^A
+    ports:
+      - "3307:3306"  # El puerto 3306 es el puerto interno del contenedor, 3307 es el puerto externo
+    volumes:
+      - db_data:/var/lib/mysql  # Persistencia de datos
+
+  app:
+    build:
+      context: ./python  # Ruta al directorio donde está el Dockerfile
+      dockerfile: Dockerfile  # Nombre del Dockerfile (opcional si se llama 'Dockerfile')
+    ports:
+      - "5000:8000" 
+    volumes:
+      - ./python/src:/app/src  # Mapea el código de la carpeta 'src'
+    depends_on:
+      - db  # La aplicación depende del servicio de base de datos
+    environment:
+      - MYSQL_HOST=db  # Asegúrate de que tu aplicación use este nombre para conectarse
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=xM78%3hU/N^A
+      - MYSQL_PORT=3306  # Cambia esto a 3306, ya que 3307 es el puerto mapeado al host
+      - MYSQL_DATABASE=loginDB
+      - SECRET_KEY=e2c56311960c3a234b2b94e0bfebc92ec38c967b8ae0f1f28a1a34366d9758ffeff12e599f375674bebb371940dbd730480859a0a51af8a393ec136ffd21fab4
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - M_USERNAME=ecommercefe.sv@gmail.com
+      - M_PASSWORD=frfldchyzcrocbqz
+      - M_FROM=ecommercefe.sv@gmail.com
+      - M_HOST=smtp.gmail.com
+      - M_PORT=587
+
+volumes:
+  db_data:  # Volumen para la persistencia de datos de MySQL

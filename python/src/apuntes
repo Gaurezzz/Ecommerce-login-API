@@ -1,0 +1,16 @@
+person = Person(12345, 'Juan') #crea un objeto de la clase Person
+session.add(person) #agrega el objeto a la sesión
+session.commit() #hace un commit de la sesión
+
+results = session.query(Person).all() #hace una consulta a la tabla Person
+
+for row in results:
+    print(row.id, row.name) #imprime los resultados de la consulta
+
+results = session.query(Person).filter(Person.id == 12345).all() #hace una consulta a la tabla Person con un filtro
+
+for row in results:
+    print(row.id, row.name) #imprime los resultados de la consulta
+
+session.close() #cierra la sesión
+
