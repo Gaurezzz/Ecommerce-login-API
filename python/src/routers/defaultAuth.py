@@ -128,7 +128,10 @@ def login(login: loginSchema, db: Session = Depends(get_db)):
     return {
         "message": "Inicio de sesión exitoso",
         "token": token,
-        "refresh_token": refresh_token
+        "refresh_token": refresh_token,
+        "id": usuario.id,
+        "nombre": usuario.nombre,
+        "email": usuario.email
     }
 
 @router.post("/changePassword")
